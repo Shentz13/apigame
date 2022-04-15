@@ -1,8 +1,8 @@
-body.home {
+body.inscription {
     background-image: URL('./assets/img/home2.jpg');
 }
 
-body.entrance {
+body.donjon {
     background-image: URL('./assets/img/entrance2.jpg');
 }
 

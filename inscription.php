@@ -1,5 +1,5 @@
 <?php
-$classBody = "home";
+$classBody = "inscription";
 ?>
 
 <?php

@@ -1,5 +1,5 @@
 <?php
-$classBody = "entrance";
+$classBody = "donjon";
 ?>
 
 <?php
