@@ -1,0 +1,54 @@
+body.home {
+    margin:0;
+    padding:0;
+    background-image: URL('./assets/img/home.jpg');
+}
+
+body {
+    height:100vh;
+    width:100vw;
+    background-color:#3c3c3c;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+}
+
+footer {
+    height:20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+.bg-transp {
+    background-color: transparent;
+}
+
+.modal-header, .modal-footer, .modal-content {
+    border:none;
+    box-shadow: none;
+}
+
+#notifs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    left:10vw;
+    right:10vw;
+    top:50vh;
+}
+
+#notifs > * {
+    color:#f19d03;
+}
+
