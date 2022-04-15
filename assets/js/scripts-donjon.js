@@ -10,7 +10,9 @@ $(document).ready(function () {
     $(document).on("click", "#escalierBtn", function() {
         console.log(localStorage.getItem("token"));
 
-        requestGeneric("http://141.95.153.155/escalier", "get", localStorage.getItem("token"));
+        requestGeneric("etage1", "http://141.95.153.155:8000", "get", localStorage.getItem("token"));
     })
+
+
 
 })
