@@ -1,0 +1,19 @@
+#hiddenTreasure {
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
+    height: 100px;
+    width:100px;
+}
+
+#hiddenTreasure:hover {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: URL('../img/hiddentreasure.png');
+    cursor:pointer;
+}
+
+.btn {
+    width:170px;
+}

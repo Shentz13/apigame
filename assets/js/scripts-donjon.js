@@ -1,0 +1,16 @@
+$(document).ready(function () {
+    console.log("Ready");
+
+    // Trésor caché
+    $(document).on("click", "#hiddenTreasure", function() {
+        requestGeneric("http://141.95.153.155/coffre", "get", localStorage.getItem("tokenStage1"));
+    })
+
+    // Escalier
+    $(document).on("click", "#escalierBtn", function() {
+        console.log(localStorage.getItem("token"));
+
+        requestGeneric("http://141.95.153.155/escalier", "get", localStorage.getItem("token"));
+    })
+
+})
