@@ -1,10 +1,14 @@
 body.home {
-    margin:0;
-    padding:0;
-    background-image: URL('./assets/img/home.jpg');
+    background-image: URL('./assets/img/home2.jpg');
+}
+
+body.entrance {
+    background-image: URL('./assets/img/entrance2.jpg');
 }
 
 body {
+    margin:0;
+    padding:0;
     height:100vh;
     width:100vw;
     background-color:#3c3c3c;
@@ -50,5 +54,10 @@ footer {
 
 #notifs > * {
     color:#f19d03;
+    text-align: center;
+}
+
+.hidden {
+    display:none!important;
 }
 
