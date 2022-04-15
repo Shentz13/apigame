@@ -1,3 +1,4 @@
+<div id="hiddenTreasure"></div>
 </main>
 <footer>
     <button type="button" class="btn btn-primary">Trésors trouvés</button>
