@@ -38,6 +38,7 @@ const traitement = [{
     ],
     etage1 : [
         {route: 'http://141.95.153.155:8000', message: 'presentation'},
+        {route: 'http://141.95.153.155:8000/tresor', message: 'tresor'}
 
     ],
     etage2 : {},

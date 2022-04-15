@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     // Trésor caché
     $(document).on("click", "#hiddenTreasure", function() {
-        requestGeneric("http://141.95.153.155/coffre", "get", localStorage.getItem("tokenStage1"));
+        requestGeneric("etage1","http://141.95.153.155/tresor", "get", localStorage.getItem("tokenStage1"));
     })
 
     // Escalier
