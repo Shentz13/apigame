@@ -18,6 +18,7 @@ function requestGeneric (page, urlApi, methodApi, tokenApi) {
         body: JSON.stringify(params)       
     
     }).then((response) => response.json()).then((response) => {
+
         genererFront(page, urlApi, response);
 
     })
@@ -45,12 +46,25 @@ const traitement = [{
 }]
 
 function genererFront(stage, url, response) {
+
+
+
 console.log(response);
     traitement[0][stage].forEach((index) => {
         if(index.route == url) {
             var ind = index.message;
-            var message = JSON.parse(response);
-            afficherMessage(message[ind]);
+
+            is_json = true;
+
+            try {
+                var message = JSON.parse(response);
+                message = message[ind];
+            } catch (error) {
+                console.log("Invalid JSON string");
+                var message = response;
+            }
+            
+            afficherMessage(message);
         }
     })
 
