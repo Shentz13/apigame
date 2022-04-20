@@ -1,5 +1,5 @@
 function requestGeneric (page, urlApi, methodApi, tokenApi) {
-
+    console.log("requestgeneric");
     var params = {
         url: urlApi,
         method: methodApi,
@@ -18,12 +18,11 @@ function requestGeneric (page, urlApi, methodApi, tokenApi) {
         body: JSON.stringify(params)       
     
     }).then((response) => response.json()).then((response) => {
-
-        genererFront(page, urlApi, response);
-
+        
+    genererFront(page, urlApi, response);
     })
+};
 
-}
 
 function afficherMessage(message) {
     console.log("MESSAGE: ", message);
@@ -34,12 +33,12 @@ function afficherMessage(message) {
 
 const traitement = [{
     inscription: [
-        {route: 'http://141.95.153.155', message: 'presentation', format: 'json'},
+        {route: 'http://141.95.153.155', message: 'presentation'},
         {route: 'http://141.95.153.155/inscription', message: 'message'},
     ],
     etage1 : [
         {route: 'http://141.95.153.155:8000', message: 'presentation'},
-        {route: 'http://141.95.153.155:8000/tresor', message: 'tresor'}
+        {route: 'http://141.95.153.155/tresor', message: 'message'}
 
     ],
     etage2 : {},
@@ -48,41 +47,20 @@ const traitement = [{
 
 function genererFront(stage, url, response) {
 
+console.log("STAGE: ", stage);
+console.log("URL: ", url);
+console.log("RESPONSE: ", response);
 
-
-console.log(response);
     traitement[0][stage].forEach((index) => {
         if(index.route == url) {
             var ind = index.message;
-
-            is_json = true;
-
-            try {
-                var message = JSON.parse(response);
-                message = message[ind];
-            } catch (error) {
-                console.log("Invalid JSON string");
-                var message = response;
-            }
+            message = response[ind];
             
             afficherMessage(message);
         }
     })
 
 }
-    /*
-    for (var [key, value] of Object.entries(traitement[0])) {
-        console.log(`${key}: ${value}`);
-        var etage = key[stage];
-
-        for (var [k,v] of Object.entries(traitement[0][etage])) {
-            var message = key[stage][method];
-            console.log(message);
-        }
-        
-    }*/
-
-
 
 
 $(document).ready(function () {
