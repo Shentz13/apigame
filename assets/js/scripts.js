@@ -24,25 +24,28 @@ function requestGeneric (page, urlApi, methodApi, tokenApi) {
 };
 
 
-function afficherMessage(message) {
+function afficherMessage(message, html = null) {
     console.log("MESSAGE: ", message);
-    $("#notifs").html("<h1>"+message+"</h1");
+    $("#notifs").html("<h1>"+message+"</h1>");
+    if(html) {
+        $("#notifs").append(html); 
+    }
 }
 
 
 
 const traitement = [{
-    inscription: [
+    entree: [
         {route: 'http://141.95.153.155', message: 'presentation'},
         {route: 'http://141.95.153.155/inscription', message: 'message'},
     ],
     etage1 : [
         {route: 'http://141.95.153.155:8000', message: 'presentation'},
-        {route: 'http://141.95.153.155/tresor', message: 'message'}
-
+        {route: 'http://141.95.153.155/tresor', message: 'message'},
     ],
-    etage2 : {},
-    etage3 : {}
+    etage2 : [
+        {route: 'http://141.95.153.155:8000', message: 'presentation'}, // Escalier depuis l'étage 1 (envoi avec token)
+    ],
 }]
 
 function genererFront(stage, url, response) {
@@ -55,8 +58,16 @@ console.log("RESPONSE: ", response);
         if(index.route == url) {
             var ind = index.message;
             message = response[ind];
+
+            let params = (new URL(document.location)).searchParams;
+            let stage = params.get('stage');
+            var html = null;
+
+            if(stage == "2inscription") {
+                html = '<button type="button" id="inscription" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>';
+            }   
             
-            afficherMessage(message);
+            afficherMessage(message, html);
         }
     })
 
@@ -101,10 +112,10 @@ $(document).ready(function () {
 
             let params = (new URL(document.location)).searchParams;
             let stage = params.get('stage');
+
             if(!stage) {
-                $("main").html('<a href="http://localhost/apigame/donjon.php" class="btn btn-primary text-light">Pénétrer dans le donjon</a>');
-            }
-                            
+                $("main").html('<a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Pénétrer dans le donjon</a>');
+            }        
             
 
         })
@@ -130,14 +141,11 @@ $(document).ready(function () {
         }
 
         if(username != "" && password != "") {
-            inscription("http://141.95.153.155/inscription", btoa(username + ": " + password));
+            inscription(urlInscription, btoa(username + ": " + password));
+        } else {
+            inscription(urlInscription, localStorage.getItem("tokenb64"));
         }
     })
-
-    const genererFooter = (step) => {
-
-    }
-
-    
+  
 
 })

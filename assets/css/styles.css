@@ -1,9 +1,13 @@
-body.inscription {
+body.entree {
     background-image: URL('../img/home2.jpg');
 }
 
-body.donjon {
+body.etage1{
     background-image: URL('../img/entrance2.jpg');
+}
+
+body.etage2 {
+    background-image: URL('../img/stage2.jpg');
 }
 
 body {
@@ -45,6 +49,7 @@ footer {
 
 #notifs {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     position:absolute;
