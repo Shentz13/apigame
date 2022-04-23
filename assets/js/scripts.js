@@ -1,4 +1,4 @@
-function requestGeneric (page, urlApi, methodApi, tokenApi) {
+function requestGeneric (page, urlApi, methodApi, tokenApi, param) {
     console.log("requestgeneric");
     var params = {
         url: urlApi,
@@ -32,7 +32,14 @@ function afficherMessage(message, html = null) {
     }
 }
 
+const passwordInput = `
+<div class="input-group mb-2" style="width:50%;">
 
+<input type="text" class="form-control" id="inlineFormInputGroup" name="chestPassword" placeholder="Enter password">
+<div class="input-group-prepend">
+  <button type="button" id="unlockChest" class="input-group-text bg-warning">Dévérouiller</button>
+</div>
+</div>`;
 
 const traitement = [{
     entree: [
@@ -42,9 +49,13 @@ const traitement = [{
     etage1 : [
         {route: 'http://141.95.153.155:8000', message: 'presentation'},
         {route: 'http://141.95.153.155/tresor', message: 'message'},
+        {route: 'http://141.95.153.155/reset', message: 'retreived_tresors'},
+        {route: 'http://141.95.153.155/1', message: 'message'},
+        {route: 'http://141.95.153.155/coffre', message: 'text', html: passwordInput},
+        {route: 'http://141.95.153.155/36', message: 'message'},
     ],
     etage2 : [
-        {route: 'http://141.95.153.155:8000', message: 'presentation'}, // Escalier depuis l'étage 1 (envoi avec token)
+        {route: 'http://141.95.153.155:8000', message: 'presentation', html: '<button type="button" id="inscription" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>'}, // Escalier depuis l'étage 1 (envoi avec token)
     ],
 }]
 
@@ -59,13 +70,11 @@ console.log("RESPONSE: ", response);
             var ind = index.message;
             message = response[ind];
 
-            let params = (new URL(document.location)).searchParams;
-            let stage = params.get('stage');
-            var html = null;
-
-            if(stage == "2inscription") {
-                html = '<button type="button" id="inscription" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>';
-            }   
+            if(index.hasOwnProperty("html")){
+                html = index.html;
+            } else {
+                html = null;
+            }
             
             afficherMessage(message, html);
         }
