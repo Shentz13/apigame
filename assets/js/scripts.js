@@ -163,6 +163,8 @@ $(document).ready(function () {
             token: b64token,
         }
 
+        monitor(params, false, "request"); // affichage détails requete
+
         fetch("http://127.0.0.1:8000/api/inscription", {
             method: "POST",
             headers: {
@@ -183,8 +185,8 @@ $(document).ready(function () {
             let params = (new URL(document.location)).searchParams;
             let stage = params.get('stage');
 
-            if (!stage) {
-                $("main").html('<a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Pénétrer dans le donjon</a>');
+            if(!stage) {
+                $("main").html('<div id="monitor"></div><a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Pénétrer dans le donjon</a>');
                 localStorage.setItem("tokenStage1", response["x-auth-token"][0]);
                 localStorage.setItem("token", response["x-auth-token"][0]);
                 console.log(localStorage);
@@ -200,6 +202,7 @@ $(document).ready(function () {
                 localStorage.setItem("tokenStage2", response["x-auth-token"][0]);
                 console.log(localStorage);
             } else if (stage == '3') {
+                $("main").html('<div id="monitor"></div>');
                 $("footer").html(`
                 <a href="http://localhost/apigame/etage2.php?stage=2" class="btn btn-primary text-light">Redescendre à l'étage inférieur</a>
                 <button type="button" class="btn btn-primary" id="recap">Trésors trouvés</button>
@@ -208,10 +211,10 @@ $(document).ready(function () {
                 `);
                 localStorage.setItem("tokenStage3", response["x-auth-token"][0]);
                 console.log(localStorage);
-
-            }
-
-
+               
+            }    
+            
+            monitor(params, false, "request"); // affichage détails requete
         })
     }
 
