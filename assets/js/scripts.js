@@ -4,13 +4,17 @@ function requestGeneric (page, urlApi, methodApi, tokenApi, param) {
         url: urlApi,
         method: methodApi,
     }    
-    
-    if(tokenApi !== false) {
-        params["token"] = tokenApi;
-    }
 
     if(urlApi == "http://141.95.153.155:8000/vieux" && methodApi == "post") {
-        params["reponse"] = param;
+        var params = {
+            url: urlApi,
+            method: methodApi,
+            data: param
+        }  
+    }
+
+    if(tokenApi !== false) {
+        params["token"] = tokenApi;
     }
 
     fetch("http://127.0.0.1:8000/api/generic", {
@@ -67,6 +71,9 @@ const traitement = [{
         {route: 'http://141.95.153.155:8000/couloir/1', message: 'message'},
         {route: 'http://141.95.153.155:8000/vieux/reponse', message: 'message'},
     ],
+    etage3 : [
+        {route: 'http://141.95.153.155:7259', message: 'presentation', html:'<button type="button" id="inscription" data-stage="3" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>'},
+    ]
 }]
 
 function genererFront(stage, url, response) {
@@ -136,7 +143,7 @@ $(document).ready(function () {
                 localStorage.setItem("tokenStage1", response["x-auth-token"][0]);
                 localStorage.setItem("token", response["x-auth-token"][0]);
                 console.log(localStorage);
-            } else if(stage = "stage2") {
+            } else if(stage == '2') {
                 $("main").html('<div id="oldMan"></div>');
                 $("footer").html(`
                 <a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Redescendre à l'étage inférieur</a>
@@ -147,7 +154,7 @@ $(document).ready(function () {
               `);
               localStorage.setItem("tokenStage2", response["x-auth-token"][0]);
               console.log(localStorage);
-            } else if(stage = "stage3") {
+            } else if(stage == '3') {
 
                 localStorage.setItem("tokenStage3", response["x-auth-token"][0]);
                 console.log(localStorage);
@@ -178,8 +185,7 @@ $(document).ready(function () {
             username = $("#username").val();
             password = $("#password").val();
         }
-console.log(username);
-console.log(password);
+
         if(username != "" && password != "") {
             console.log("checkpoint1");
             inscription(urlInscription, btoa(username + ": " + password));
@@ -188,7 +194,7 @@ console.log(password);
                 var tok = localStorage.getItem("tokenb64");
                 console.log("checkpoint2");
                 inscription(urlInscription, tok);
-            }
+            } 
             
         }
     })
