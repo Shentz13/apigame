@@ -6,7 +6,7 @@ function requestGeneric (page, urlApi, methodApi, tokenApi, param) {
     }    
     
     if(tokenApi !== false) {
-        params["token"] = localStorage.getItem("token");
+        params["token"] = tokenApi;//localStorage.getItem("token");
     }
 
     fetch("http://127.0.0.1:8000/api/generic", {
@@ -55,7 +55,10 @@ const traitement = [{
         {route: 'http://141.95.153.155/36', message: 'message'},
     ],
     etage2 : [
-        {route: 'http://141.95.153.155:8000', message: 'presentation', html: '<button type="button" id="inscription" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>'}, // Escalier depuis l'étage 1 (envoi avec token)
+        {route: 'http://141.95.153.155:8000', message: 'presentation', html: '<button type="button" id="inscription" data-stage="2" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>'}, // Escalier depuis l'étage 1 (envoi avec token)
+        {route: 'http://141.95.153.155:8000/vieux', message: 'descripton', html: '<h1>"En un mot, quelle est la notion de HTTP qui différencie la méthode POST et PUT ?"</h1><div><input type="text" name="reponseVieux" class="form-control"><button type="button" class="btn btn-light" id="reponseVieux">Soumettre la réponse</button></div>'},
+        {route: 'http://141.95.153.155:8000/reset', message: 'retreived_tresors'},
+        {route: 'http://141.95.153.155:8000/couloir', message: 'message', html: '</h1><button type="button" class="btn btn-light" id="couloir">Voyons cela !</button>'},
     ],
 }]
 
@@ -116,15 +119,25 @@ $(document).ready(function () {
             $('main, footer').html('');
             afficherMessage(message);
 
-            localStorage.setItem("token", response["x-auth-token"][0]);
-            console.log(localStorage);
+            
 
             let params = (new URL(document.location)).searchParams;
             let stage = params.get('stage');
 
             if(!stage) {
                 $("main").html('<a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Pénétrer dans le donjon</a>');
-            }        
+                localStorage.setItem("tokenStage1", response["x-auth-token"][0]);
+                localStorage.setItem("token", response["x-auth-token"][0]);
+                console.log(localStorage);
+            } else if(stage = "stage2") {
+                $("main").html('<div id="oldMan"></div>');
+                $("footer").html(`
+                <button type="button" class="btn btn-primary" id="recap">Trésors trouvés</button>
+                <button type="button" class="btn btn-primary" id="couloir">Emprunter le couloir</button>
+                <a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Redescendre à l'étage inférieur</a>`);
+                localStorage.setItem("tokenStage2", response["x-auth-token"][0]);
+                console.log(localStorage);
+            }    
             
 
         })
@@ -138,8 +151,8 @@ $(document).ready(function () {
     })
 
     $(document).on("click", "#inscription", function() {
-        var username = $("#usename").val();
-        var password = $("#password").val();
+        var password = "";
+        var username = "";
         var urlInscription = "";
         if(parseInt($("#inscription").attr("data-stage")) == 2) {
             urlInscription = "http://141.95.153.155:8000/inscription";
@@ -147,12 +160,21 @@ $(document).ready(function () {
             urlInscription = "http://141.95.153.155:7259/inscription";
         } else {
             urlInscription = "http://141.95.153.155/inscription";
+            username = $("#username").val();
+            password = $("#password").val();
         }
-
+console.log(username);
+console.log(password);
         if(username != "" && password != "") {
+            console.log("checkpoint1");
             inscription(urlInscription, btoa(username + ": " + password));
         } else {
-            inscription(urlInscription, localStorage.getItem("tokenb64"));
+            if(parseInt($("#inscription").attr("data-stage")) != 1) {
+                var tok = localStorage.getItem("tokenb64");
+                console.log("checkpoint2");
+                inscription(urlInscription, tok);
+            }
+            
         }
     })
   

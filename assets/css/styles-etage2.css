@@ -1,0 +1,15 @@
+#oldMan {
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
+    height: 600px;
+    width:300px;
+}
+
+#oldMan {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: URL('../img/vieux.png');
+    cursor:pointer;
+}
