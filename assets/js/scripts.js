@@ -73,6 +73,8 @@ const traitement = [{
     ],
     etage3 : [
         {route: 'http://141.95.153.155:7259', message: 'presentation', html:'<button type="button" id="inscription" data-stage="3" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>'},
+        {route: 'http://141.95.153.155:7259/reset', message: 'retreived_tresors'},
+        {route: 'http://141.95.153.155:7259/dragon', message: 'message'},
     ]
 }]
 
@@ -155,7 +157,11 @@ $(document).ready(function () {
               localStorage.setItem("tokenStage2", response["x-auth-token"][0]);
               console.log(localStorage);
             } else if(stage == '3') {
-
+                $("footer").html(`
+                <a href="http://localhost/apigame/etage2.php?stage=2" class="btn btn-primary text-light">Redescendre à l'étage inférieur</a>
+                <button type="button" class="btn btn-primary" id="recap">Trésors trouvés</button>
+                <button type="button" class="btn btn-primary" id="dragon">Combattre le dragon</button>
+                `);
                 localStorage.setItem("tokenStage3", response["x-auth-token"][0]);
                 console.log(localStorage);
                
