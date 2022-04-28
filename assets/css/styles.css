@@ -11,7 +11,8 @@ body.etage2 {
 }
 
 body.etage3{
-    background-image: URL('');
+    background-image: URL('../img/stage33.jpg');
+    background-size: cover;
 }
 
 body {
