@@ -1,4 +1,24 @@
-function requestGeneric(page, urlApi, methodApi, tokenApi, param) {
+function monitor(body, mode, type) {
+    //body = JSON.stringify(body);
+    console.log(body);
+    var text = '<p class="bracket">{</p>';
+    for (const [key, value] of Object.entries(body)) {
+        console.log(`${key}: ${value}`);
+        text += `<p><span class="bold">${key}:</span> ${value}</p>`;
+      }
+      text += '<p class="bracket">}</p>';
+
+      var title = type == "request" ? "Requête" : "Réponse";
+      
+    if(mode) {
+        $("#monitor").append('<br><h1>'+title+'</h1>'+text);
+    } else {
+        $("#monitor").html('<h1>'+title+'</h1>'+text);
+    }
+        
+}
+
+function requestGeneric (page, urlApi, methodApi, tokenApi, param) {
     console.log("requestgeneric");
     var params = {
         url: urlApi,
@@ -17,17 +37,23 @@ function requestGeneric(page, urlApi, methodApi, tokenApi, param) {
         params["token"] = tokenApi;
     }
 
+    monitor(params, false, "request"); // affichage détails requete
+
     fetch("http://127.0.0.1:8000/api/generic", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
         },
-        body: JSON.stringify(params)
-
+        body: JSON.stringify(params), 
+    
     }).then((response) => response.json()).then((response) => {
 
         urlApi = methodApi == "post" ? urlApi + '/reponse' : urlApi;
+        if(urlApi == "http://141.95.153.155/coffre") {
+            localStorage.setItem("message", response.message);
+        }
+        monitor(response, true, "reponse");
         genererFront(page, urlApi, response);
     })
 };
@@ -162,8 +188,8 @@ $(document).ready(function () {
                 localStorage.setItem("tokenStage1", response["x-auth-token"][0]);
                 localStorage.setItem("token", response["x-auth-token"][0]);
                 console.log(localStorage);
-            } else if (stage == '2') {
-                $("main").html('<div id="oldMan"></div>');
+            } else if(stage == '2') {
+                $("main").html('<div id="monitor"></div><div id="oldMan"></div>');
                 $("footer").html(`
                 <a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Redescendre à l'étage inférieur</a>
                 <button type="button" class="btn btn-primary" id="recap">Trésors trouvés</button>

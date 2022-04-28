@@ -72,4 +72,32 @@ footer {
     display:none!important;
 }
 
+.bold {
+    font-weight: bold!important;
+}
+
+#monitor {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: absolute;
+    top:5%;
+    left:5%;
+    max-width:30vw;
+}
+
+#monitor p, #monitor h1 {
+    color:white;
+    margin:0;
+}
+
+#monitor h1 {
+    font-size: 2rem;
+}
+
+#monitor p:not(.bracket) {
+    margin-left: 10px;
+}
+
 

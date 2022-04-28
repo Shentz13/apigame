@@ -1,6 +1,7 @@
 <div id="hiddenTreasure"></div>
 <div id="treasure"></div>
 <div id="coffre"></div>
+<div id="monitor"></div>
 </main>
 <div id="notifs"></div>
 <footer>
