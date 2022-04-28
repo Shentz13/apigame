@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-
+        <div id="monitor"></div>
         </main>
         <div id="notifs"></div>
         <footer>
