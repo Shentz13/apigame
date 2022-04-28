@@ -10,6 +10,10 @@ body.etage2 {
     background-image: URL('../img/stage2.jpg');
 }
 
+body.etage3{
+    background-image: URL('');
+}
+
 body {
     margin:0;
     padding:0;
