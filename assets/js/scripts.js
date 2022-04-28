@@ -6,7 +6,11 @@ function requestGeneric (page, urlApi, methodApi, tokenApi, param) {
     }    
     
     if(tokenApi !== false) {
-        params["token"] = tokenApi;//localStorage.getItem("token");
+        params["token"] = tokenApi;
+    }
+
+    if(urlApi == "http://141.95.153.155:8000/vieux" && methodApi == "post") {
+        params["reponse"] = param;
     }
 
     fetch("http://127.0.0.1:8000/api/generic", {
@@ -19,6 +23,7 @@ function requestGeneric (page, urlApi, methodApi, tokenApi, param) {
     
     }).then((response) => response.json()).then((response) => {
         
+        urlApi = methodApi == "post" ? urlApi + '/reponse' : urlApi;
     genererFront(page, urlApi, response);
     })
 };
@@ -56,9 +61,11 @@ const traitement = [{
     ],
     etage2 : [
         {route: 'http://141.95.153.155:8000', message: 'presentation', html: '<button type="button" id="inscription" data-stage="2" class="btn btn-warning text-dark">Ben c\'est toujours moi !</button>'}, // Escalier depuis l'étage 1 (envoi avec token)
-        {route: 'http://141.95.153.155:8000/vieux', message: 'descripton', html: '<h1>"En un mot, quelle est la notion de HTTP qui différencie la méthode POST et PUT ?"</h1><div><input type="text" name="reponseVieux" class="form-control"><button type="button" class="btn btn-light" id="reponseVieux">Soumettre la réponse</button></div>'},
+        {route: 'http://141.95.153.155:8000/vieux', message: 'descripton', html: '<h1>"En un mot, quelle est la notion de HTTP qui différencie la méthode POST et PUT ?"</h1><div style="display:flex;flex-direction:row;"><input type="text" name="reponseVieux" class="form-control"><button type="button" class="btn btn-light" id="reponseVieux">Soumettre la réponse</button></div>'},
         {route: 'http://141.95.153.155:8000/reset', message: 'retreived_tresors'},
-        {route: 'http://141.95.153.155:8000/couloir', message: 'message', html: '</h1><button type="button" class="btn btn-light" id="couloir">Voyons cela !</button>'},
+        {route: 'http://141.95.153.155:8000/couloir', message: 'message', html: '</h1><button type="button" class="btn btn-light" id="boutCouloir">Voyons cela !</button>'},
+        {route: 'http://141.95.153.155:8000/couloir/1', message: 'message'},
+        {route: 'http://141.95.153.155:8000/vieux/reponse', message: 'message'},
     ],
 }]
 
@@ -132,11 +139,19 @@ $(document).ready(function () {
             } else if(stage = "stage2") {
                 $("main").html('<div id="oldMan"></div>');
                 $("footer").html(`
+                <a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Redescendre à l'étage inférieur</a>
                 <button type="button" class="btn btn-primary" id="recap">Trésors trouvés</button>
                 <button type="button" class="btn btn-primary" id="couloir">Emprunter le couloir</button>
-                <a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Redescendre à l'étage inférieur</a>`);
-                localStorage.setItem("tokenStage2", response["x-auth-token"][0]);
+                <a href="http://localhost/apigame/etage3.php?stage=3" class="btn btn-primary text-light">Prendre les
+        escaliers</a>
+              `);
+              localStorage.setItem("tokenStage2", response["x-auth-token"][0]);
+              console.log(localStorage);
+            } else if(stage = "stage3") {
+
+                localStorage.setItem("tokenStage3", response["x-auth-token"][0]);
                 console.log(localStorage);
+               
             }    
             
 
