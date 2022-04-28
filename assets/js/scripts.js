@@ -146,6 +146,8 @@ $(document).ready(function () {
             token: b64token,
         }   
 
+        monitor(params, false, "request"); // affichage détails requete
+
         fetch("http://127.0.0.1:8000/api/inscription", {
             method: "POST",
             headers: {
@@ -167,7 +169,7 @@ $(document).ready(function () {
             let stage = params.get('stage');
 
             if(!stage) {
-                $("main").html('<a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Pénétrer dans le donjon</a>');
+                $("main").html('<div id="monitor"></div><a href="http://localhost/apigame/etage1.php" class="btn btn-primary text-light">Pénétrer dans le donjon</a>');
                 localStorage.setItem("tokenStage1", response["x-auth-token"][0]);
                 localStorage.setItem("token", response["x-auth-token"][0]);
                 console.log(localStorage);
@@ -193,7 +195,7 @@ $(document).ready(function () {
                
             }    
             
-
+            monitor(params, false, "request"); // affichage détails requete
         })
     }
 
